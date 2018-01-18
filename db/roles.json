@@ -1,10 +1,8 @@
-[
-  {
-    "id": "1",
-    "name": "admin"
+{
+  "1": {
+    "name": "Admin"
   },
-  {
-    "id": "2",
-    "name": "member"
+  "2": {
+    "name": "Member"
   }
-]
+}

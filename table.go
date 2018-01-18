@@ -13,7 +13,7 @@ type Table struct {
 	SelectFields []string
 }
 
-func (t *Table) Get() []map[string]string {
+func (t *Table) Get() map[string]map[string]string {
 	t.Load()
 
 	// If no wheres were added, return entire resultset.
@@ -22,10 +22,10 @@ func (t *Table) Get() []map[string]string {
 	}
 
 	// Store matches here
-	var result []map[string]string
+	result := make(map[string]map[string]string)
 
 	// Loop through available rows
-	for _, row := range t.DataToMap() {
+	for primaryKey, row := range t.DataToMap() {
 
 		match := true
 
@@ -42,7 +42,7 @@ func (t *Table) Get() []map[string]string {
 
 		if match {
 			// Append the row to our resultset if it's what we want.
-			result = append(result, row)
+			result[primaryKey] = row
 		}
 	}
 
@@ -61,8 +61,8 @@ func (t *Table) AddQuery(q *Query) *Table {
 	return t
 }
 
-func (t *Table) DataToMap() []map[string]string {
-	var result []map[string]string
+func (t *Table) DataToMap() map[string]map[string]string {
+	var result map[string]map[string]string
 
 	err := json.Unmarshal(t.Data, &result)
 
